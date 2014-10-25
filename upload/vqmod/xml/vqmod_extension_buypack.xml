@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>VQMOD Extension item per package</id>
+	<version>1.5.x</version>
+	<vqmver required="true">2.4.0</vqmver>
+	<author>koury yula.firm@gmail.com</author>
+
+	<!-- Admin -->
+	<file path="admin/" name="controller/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA[$this->data['entry_quantity'] = $this->language->get('entry_quantity');]]></search>
+			<add><![CDATA[
+				$this->data['entry_qty_perpack'] = $this->language->get('entry_qty_perpack');
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after" offset="7"><![CDATA[if (isset($this->request->post['quantity'])) {]]></search>
+			<add><![CDATA[
+				if (isset($this->request->post['quantity'])) {
+					$this->data['qty_perpack'] = $this->request->post['qty_perpack'];
+				} elseif (!empty($product_info)) {
+					$this->data['qty_perpack'] = $product_info['qty_perpack'];
+				} else {
+					$this->data['qty_perpack'] = 1;
+				}
+			]]></add>
+		</operation>		
+	</file>	
+	
+	<file path="admin/" name="model/catalog/product.php">
+		<operation>
+			<search position="replace"><![CDATA[$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");]]></search>
+			<add><![CDATA[
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', qty_perpack = '" . (int)$data['qty_perpack'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[$this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");]]></search>
+			<add><![CDATA[
+				$this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', qty_perpack = '".(int)$data['qty_perpack']."', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
+			]]></add>
+		</operation>
+	</file>
+
+	<file path="admin/" name="language/*/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA[// Entry]]></search>
+			<add><![CDATA[
+$_['entry_qty_perpack']             = 'Quantity per package:';
+			]]></add>
+		</operation>
+	</file>		
+	
+	<file path="admin/" name="view/template/catalog/product_form.tpl">
+		<operation>
+			<search position="after" offset="3"><![CDATA[<td><?php echo $entry_quantity; ?></td>]]></search>
+			<add><![CDATA[
+				<tr>
+					<td><?php echo $entry_qty_perpack; ?></td>
+					<td><input type="text" name="qty_perpack" value="<?php echo $qty_perpack; ?>" size="2" /></td>
+				</tr>
+			]]></add>
+		</operation>
+	</file>	
+	
+	<!-- Catalog -->
+	<file path="catalog/" name="controller/product/product.php">
+		<operation>
+			<search position="after"><![CDATA[$this->data['points'] = $product_info['points'];]]></search>
+			<add><![CDATA[
+			if (isset($product_info['qty_perpack'])) {
+				$this->data['qty_perpack'] = $product_info['qty_perpack'];	
+			} else {
+				$this->data['qty_perpack'] = 1;		
+			}
+			
+			$this->language->load('module/buypack');
+			
+			$this->data['text_buypack_message'] = sprintf($this->language->get('text_buypack_message'), $this->data['qty_perpack']);			
+			$this->data['error_qty_perpack'] = sprintf($this->language->get('error_qty_perpack'), $this->data['qty_perpack']);
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/" name="model/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA['quantity'         => $query->row['quantity'],]]></search>
+			<add><![CDATA[
+			'qty_perpack'         => $query->row['qty_perpack'],
+			]]></add>
+		</operation>
+	</file>	
+
+	<file path="catalog/" name="view/theme/*/template/product/product.tpl">
+		<operation>
+			<search position="replace"><![CDATA[<?php echo $text_price; ?>]]></search>
+			<add><![CDATA[
+		<?php if ($this->config->get('buypack_status') && $qty_perpack > 1) { ?>
+		<span class="price-tax"><?php echo $text_buypack_message; ?></span><br />
+		<?php } ?>
+		<?php echo $text_price; ?>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[<?php echo $content_bottom; ?></div>]]></search>
+			<add><![CDATA[
+		<input type="hidden" name="buypack_cache_quantity" />
+			]]></add>
+		</operation>		
+		<operation>
+			<search position="before"><![CDATA[<?php echo $footer; ?>]]></search>
+			<add><![CDATA[
+<?php if ($this->config->get('buypack_status') && $qty_perpack > 1) { ?>			
+<script type="text/javascript"><!--
+$('input[name="quantity"]').on('focus', function(){
+	$('input[name="buypack_cache_quantity"]').val($(this).val());
+});
+$('input[name="quantity"]').on('change', function(){
+	$('.error').remove();
+	
+	var quantity = $(this).val();
+	var floor = Math.floor(quantity / <?php echo $qty_perpack; ?>);
+	var ceil = Math.ceil(quantity / <?php echo $qty_perpack; ?>);
+	
+	if (floor != ceil) {
+		$('div.cart > div:first').after('<span class="error"><?php echo $error_qty_perpack; ?></span>');
+		
+		$('input[name="quantity"]').val($('input[name="buypack_cache_quantity"]').val());
+	}
+});
+//--></script>
+<?php } ?>
+			]]></add>
+		</operation>		
+
+	</file>	
+</modification>
