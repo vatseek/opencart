@@ -1,7 +1,9 @@
 # Config and Htaccess Files
 /upload/.htaccess
 /upload/config.php
+/upload/index.php
 /upload/admin/config.php
+/upload/admin/index.php
 
 # System Cache Files
 /upload/system/cache/*
@@ -36,3 +38,6 @@
 # /upload/backup.install/*
 # /upload/install/*
 
+# Vqmod Files
+/upload/vqmod/*
+!/upload/vqmod/xml/*
